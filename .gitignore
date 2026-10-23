@@ -1,0 +1,7 @@
+env.sh
+sakila-db/
+sakila-db.tar.gz
+.ipynb_checkpoints/
+.virtual_documents/
+.claude/tool-log.txt
+.DS_Store
