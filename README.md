@@ -6,18 +6,10 @@
 
 ## The idea in one picture
 
-```
-./deploy_sakila.sh
-  ├─ Cloud SQL Admin API on
-  ├─ instance exists?   yes → skip   no → create (MySQL 8.0, db-f1-micro, us-central1)
-  ├─ database exists?   yes → skip   no → create
-  ├─ sakila-db/ present? yes → skip  no → download + unpack
-  ├─ Cloud SQL Auth Proxy on 127.0.0.1:3307 + chmod-600 temp option file (deleted by trap on exit)
-  ├─ already loaded? (16 tables · 1,000 films · 16,044 payments)  yes → skip   no → import schema, then data
-  └─ verify:  PASS base tables = 16 · PASS film rows = 1000 · PASS payment total = 67406.56
-
-./deploy_sakila.sh down   → type the instance name to confirm → delete
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/deploy-flow-dark.png">
+  <img alt="deploy_sakila.sh: create the instance only if missing, download Sakila, connect through the Auth Proxy, load, verify with three PASS checks; down deletes after typing the name" src="assets/deploy-flow-light.png" width="100%">
+</picture>
 
 ## What's in here
 
@@ -55,12 +47,18 @@ Needs `gcloud`, `cloud-sql-proxy` and the `mysql` client (all preinstalled in Cl
 
 ## Verified, not assumed
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/top-customers-dark.png">
+  <img alt="Top 5 customers by total payments; the sum over all 599 customers equals the payment total, $67,406.56" src="assets/top-customers-light.png" width="100%">
+</picture>
+
+
 - Script: no password in the file (`grep -cF -- "$MYSQL_ROOT_PW" deploy_sakila.sh` → 0); a re-run against an existing instance skips every create and import and still prints three PASS lines.
 - Top 5 customers by payments: KARL SEAL 221.55 · ELEANOR HUNT 216.54 · CLARA SHAW 195.58 · RHONDA KENNEDY 194.61 · MARION SNYDER 194.61. The sum over all 599 customers equals the payment table total, 67,406.56.
 - Teardown: `gcloud sql instances list` → `Listed 0 items.`
 
 ## Context
 
-Built for **ADSP 31011 Cloud-Native Data Engineering** (UChicago MS in Applied Data Science, Autumn 2026). The repository is private under the course's academic-integrity policy and shared on request. Sakila is © Oracle (BSD license) and is downloaded by the script, not stored here.
+Built for **ADSP 31011 Cloud-Native Data Engineering** (UChicago MS in Applied Data Science, Autumn 2026). Published with the instructor's permission to showcase the work. Sakila is © Oracle (BSD license) and is downloaded by the script, not stored here.
 
 **Hao Kang** · [LinkedIn](https://www.linkedin.com/in/hao-kang-6654b5331/) · [GitHub](https://github.com/haokang-uchicago)
